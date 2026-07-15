@@ -47,8 +47,8 @@ public class NotificationsResource {
                 .body(new MessageBody("Thanks for signing up to Nova."))
                 .build());
         return Map.of(
-                "sent", result.success(),
-                "providerMessageId", result.providerMessageId() == null ? "" : result.providerMessageId(),
-                "channel", "email");
+                "sent", result.isSent(),
+                "providerMessageId", result.providerMessageId().orElse(""),
+                "channel", result.channel().name().toLowerCase());
     }
 }
