@@ -29,7 +29,7 @@ import java.util.Map;
 @ApplicationScoped
 @Path("/api/notifications/email")
 @Produces(MediaType.APPLICATION_JSON)
-public class NotificationsResource {
+public final class NotificationsResource {
 
     private final NotificationFacade facade;
 
@@ -37,6 +37,15 @@ public class NotificationsResource {
         this.facade = facade;
     }
 
+    /**
+     * Sends a welcome email through the Nova Platform notifications
+     * facade and returns a small JSON summary. Designed for extension:
+     * subclasses may override {@link #welcome()} to compose custom
+     * payloads but must not break the response shape (sent boolean,
+     * providerMessageId string, channel string).
+     *
+     * @return JSON-friendly map describing the send result.
+     */
     @GET
     @Path("/welcome")
     public Map<String, Object> welcome() {
