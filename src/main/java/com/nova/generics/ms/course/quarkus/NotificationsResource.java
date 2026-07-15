@@ -18,9 +18,9 @@ import java.util.Map;
  * Minimal REST surface for the {@code ms-course-quarkus} instance.
  *
  * <p>This single endpoint demonstrates the full flow:
- * Quarkus REST controller -> NotificationFacade (provided by the
- * {@code nova-notifications-quarkus-extension} adapter) -> simulated
- * email send -> NotificationResult JSON.
+ * Quarkus REST controller -&gt; NotificationFacade (provided by the
+ * {@code nova-notifications-quarkus-extension} adapter) -&gt; simulated
+ * email send -&gt; NotificationResult JSON.
  *
  * <p>It is the Quarkus counterpart of the
  * {@code com.nova.generics.ms-course} Spring Boot instance
@@ -31,18 +31,23 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 public final class NotificationsResource {
 
+    /** Notifications facade injected by CDI; resolved by SmallRye config. */
     private final NotificationFacade facade;
 
-    public NotificationsResource(NotificationFacade facade) {
-        this.facade = facade;
+    /**
+     * CDI-friendly constructor.
+     *
+     * @param facadeArg notifications facade provided by the extension.
+     */
+    public NotificationsResource(final NotificationFacade facadeArg) {
+        this.facade = facadeArg;
     }
 
     /**
      * Sends a welcome email through the Nova Platform notifications
      * facade and returns a small JSON summary. Designed for extension:
-     * subclasses may override {@link #welcome()} to compose custom
-     * payloads but must not break the response shape (sent boolean,
-     * providerMessageId string, channel string).
+     * subclasses may override this method to compose custom payloads
+     * but must not break the response shape.
      *
      * @return JSON-friendly map describing the send result.
      */
