@@ -44,6 +44,22 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- Explicit re-declaration of the parent's repositories so Maven can
+         resolve nova-quarkus-parent itself (parent inheritance of
+         <repositories> works but is fragile across some Maven versions and
+         when the child overrides <dependencyManagement>). The server ids
+         below match nova-setup-java's settings.xml (cross-repo reads). -->
+    <repositories>
+        <repository>
+            <id>nova-packages-read-bom</id>
+            <url>https://maven.pkg.github.com/ahincho/nova-java-quarkus-parent</url>
+        </repository>
+        <repository>
+            <id>nova-packages-read-starter</id>
+            <url>https://maven.pkg.github.com/ahincho/nova-java-notifications-quarkus-extension</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- Quarkus core extensions -->
         <dependency>
