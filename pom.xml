@@ -7,7 +7,7 @@
     <parent>
         <groupId>pe.edu.nova.java</groupId>
         <artifactId>nova-quarkus-parent</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
         <relativePath/>
     </parent>
 
@@ -16,12 +16,12 @@
     <version>1.0.0</version>
     <name>ms-course-quarkus</name>
 
-    <!-- Quarkus property propagation: nova-quarkus-parent already declares
-         <quarkus.platform.*> in <properties>, but Maven's <parent>
-         inheritance only inherits values that the child does not override.
-         We re-declare them here so Maven can resolve ${quarkus.platform.*}
-         when reading this POM (used in <dependencyManagement> and the
-         quarkus-maven-plugin <version>). -->
+    <!-- Quarkus property propagation: nova-quarkus-parent transitively imports
+         nova-quarkus-bom which itself imports io.quarkus.platform:quarkus-bom,
+         but Maven's <parent> inheritance only inherits values that the child
+         does not override. We re-declare ${quarkus.platform.*} here so Maven
+         can resolve them in <dependencyManagement> and the quarkus-maven-plugin
+         <version> in this child POM. The version mirrors nova-quarkus-bom's. -->
     <properties>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
